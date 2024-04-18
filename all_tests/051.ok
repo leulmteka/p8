@@ -1,0 +1,4 @@
+*** Passed file test, only holding 10 file descriptors
+*** Passed open test, filling unused descriptor index
+*** Properly returned from a faulty execl
+*** You've passed all tests in this last CS439 testcase!

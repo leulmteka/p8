@@ -1,0 +1,42 @@
+*** SOME FLAG TO TELL ME THIS IS MY TEST
+*** 1
+*** init
+*** fd = 3
+*** len = 43
+*** GOING INTO CP
+*** this is nice
+*** we can read and write
+*** RETURNING FROM CP
+*** fd = 3
+*** len = 43
+*** close = 0
+*** fd = 3
+*** len = -1
+*** GOING INTO CP
+*** libc.c:27 read error, fd = 3
+*** RETURNING FROM CP
+*** fd = 3
+*** len = -1
+*** fd = 99
+*** len = -1
+*** GOING INTO CP
+*** libc.c:27 read error, fd = 99
+*** RETURNING FROM CP
+*** fd = 99
+*** len = -1
+*** fd = -1
+*** len = -1
+*** GOING INTO CP
+*** libc.c:27 read error, fd = -1
+*** RETURNING FROM CP
+*** fd = -1
+*** len = -1
+*** open again 3
+*** fd = 3
+*** len = 43
+*** GOING INTO CP
+*** this is nice
+*** we can read and write
+*** RETURNING FROM CP
+*** fd = 3
+*** len = 43

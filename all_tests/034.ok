@@ -1,0 +1,12 @@
+*** fd = 3
+*** len = 11828
+*** read result = -1
+*** I am in the kernel space.
+*** read result = -1
+*** I am the IOAPIC
+*** read result = -1
+*** I am the LAPIC
+*** write result = -1
+*** write result = -1
+*** write result = -1
+*** execl result = -1

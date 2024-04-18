@@ -1,0 +1,36 @@
+*** this is argc: 1
+*** this is argv: init
+*** TESTING OPENING FILES ***
+*** Length of this file = 53
+*** welcome to my test case
+*** we can open files :)
+*** 
+*** TESTING SEEK ***
+*** Changing offset, should only print 2nd line now. This is what offset is changing by: 28
+*** we can open files :)
+*** 
+*** TESTING CLOSING FILES ***
+*** close = 0
+*** 
+*** TESTING OPENING A NEW FILE ***
+*** Mr. Moony presents his compliments to Professor Snape, 
+*** and begs him to keep his abnormally large nose out of other people's business.
+*** Mr. Prongs agrees with Mr. Moony, and would like to add that Professor Snape is an ugly git.
+*** Mr. Padfoot would like to register his astonishment that an idiot like that ever became a professor.
+*** Mr. Wormtail bids Professor Snape good day, and advises him to wash his hair, the slimeball.
+*** 
+*** TESTING OPENING ANOTHER NEW FILE ***
+*** The mind can go either direction under stress—toward positive or toward negative: on or off.
+*** Think of it as a spectrum whose extremes are unconsciousness at the negative end and
+*** hyperconsciousness at the positive end. The way the mind will lean under stress is strongly influenced by training.
+*** ~ Frank Herbert, Dune
+*** 
+*** TESTING FORK ***
+*** I AM THE CHILD
+*** argc = 3
+*** argv[0]=lisan
+*** argv[1]=al
+*** argv[2]=gaib
+*** back from wait 439
+*** congrats
+*** you passed all my tests!!

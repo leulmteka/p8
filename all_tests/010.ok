@@ -1,0 +1,44 @@
+*** Welcome to my AWESOME test case!
+***
+*** Test 1: Do you correctly handle a full FD?
+***
+*** Passed Test 1!
+***
+*** Test 2: Seeking and reading files...
+***
+*** Who said—“Two vast and trunkless legs of stone
+*** Stand in the desert. . . . Near them, on the sand,
+*** Half sunk a shattered visage lies, whose frown,
+*** And wrinkled lip, and sneer of cold command,
+*** Tell that its sculptor well those passions read
+*** Which yet survive, stamped on these lifeless things,
+*** The hand that mocked them, and the heart that fed;
+*** And on the pedestal, these words appear:
+*** My name is Ozymandias, King of Kings;
+*** Look on my Works, ye Mighty, and despair!
+*** Nothing beside remains. Round the decay
+*** Of that colossal Wreck, boundless and bare
+*** The lone and level sands stretch far away.”
+***
+*** Which yet survive, stamped on these lifeless things,
+*** The hand that mocked them, and the heart that fed;
+*** And on the pedestal, these words appear:
+*** My name is Ozymandias, King of Kings;
+*** Look on my Works, ye Mighty, and despair!
+*** Nothing beside remains. Round the decay
+*** Of that colossal Wreck, boundless and bare
+*** The lone and level sands stretch far away.”
+***
+*** libc.c:27 read error, fd = -1
+***
+*** Passed Test 2!
+***
+*** Test 3: Are you opening the correct file?
+***
+*** AWESOME!
+***
+*** Passed Test 3!
+***
+*** Test 4: Can you write to files?
+***
+*** Passed Test 4!

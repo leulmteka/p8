@@ -1,0 +1,52 @@
+*** argc Val:1
+*** argv Val:init
+*** open and close tests
+*** fd1 = 3
+*** fd2 = 4
+*** fd3 = 5
+*** close = 0
+*** close = 0
+*** close = 0
+*** done with those!
+*** quick test of len 
+***len = -1
+*** testing read 
+*** Before OS
+***     .-""""""-.
+***   .'          '.
+***  /   O      O   \
+*** :           `    :
+*** |                |   sad
+*** :    .------.    :
+***  \  '        '  /
+***   '.          .'
+***     '-......-'
+*** After OS
+***     .-""""""-.  
+***   .'          '. 
+***  /   O      O   \ 
+*** :                :
+*** |                |  goofy
+*** : ',          ,' :
+***  \  '-.____.-'  / 
+***   '.     U    .'
+***     '-...
+*** error test result:-1 
+*** done with read test! 
+*** testing seek now 
+*** seek1: 4
+*** seek2 2
+*** seek test done 
+*** Starting semaphore tests
+*** Child process waiting on semaphore
+*** Child process acquired semaphore
+*** Child process working 0
+*** Child process working 1
+*** Child process released semaphore
+*** Parent process working before semaphore
+*** Parent process acquired semaphore
+*** Parent process working 0
+*** Parent process working 1
+*** Parent process released semaphore
+*** Semaphore tests done
+*** All tests done

@@ -1,0 +1,17 @@
+*** Successfully opened file.
+*** but only 
+*** Successfully opened file.
+*** 23
+*** Child process complete.
+*** Sucessfuly returned from bad execl called.
+*** Parent work #1
+*** Parent work #2
+*** Parent work #3
+*** Parent work #4
+*** Parent work #5
+*** Child work #1
+*** Child work #2
+*** Child work #3
+*** Child work #4
+*** Child work #5
+*** Child process complete.

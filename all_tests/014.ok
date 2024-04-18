@@ -1,0 +1,10 @@
+*** Number of arguments: 1
+*** Argument 0: init
+*** Testing file operations for: /etc/lastChristmas.txt
+*** File opened successfully with fd = 3
+*** Length of the file: 316
+*** File close operation returned: 0
+*** Testing file operations for: /etc/tree.txt
+*** File opened successfully with fd = 3
+*** Length of the file: 279
+*** File close operation returned: 0

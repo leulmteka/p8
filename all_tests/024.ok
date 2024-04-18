@@ -1,0 +1,22 @@
+*** File descriptor for data.txt: 3
+*** this is nice
+*** we can read and write
+*** close = 0
+*** Trying to access closed file, fd = 3
+*** libc.c:27 read error, fd = 3
+*** Opening non-existent file, fd = 25
+*** libc.c:27 read error, fd = 25
+*** open again 3
+*** seek 17
+*** Semaphore created with ID: 536870912
+*** Semaphore down result: 0
+*** Trying to access closed file, fd = 3
+*** we can read and write
+*** Semaphore close result: 0
+*** Semaphore down result after close: -1
+*** Semaphore up result after close: -1
+*** File descriptor for data.txt: 4
+*** Length of the file: 43
+*** New offset after seeking: 143
+*** Read error
+*** Close result: 0

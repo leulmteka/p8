@@ -1,0 +1,28 @@
+*** length of symbolic is : 8
+*** you can read sym links
+*** 1
+*** length of file is : 1736
+*** Don't panic
+*** 
+*** 
+***                          oooo$$$$$$$$$$$$oooo
+***                       oo$$$$$$$$$$$$$$$$$$$$$$$$o
+***                    oo$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o         o$   $$ o$
+***    o $ oo        o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o       $$ $$ $$o$
+*** oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o    
+*** 2
+*** Created semaphores with IDs: 536870913, 536870914
+*** Child process 1 acquired semaphore 1 
+*** Child process 1 doing some work
+****************************************************************************************************
+*** Child process 2 acquired semaphore 2
+*** Child process 2 doing some work
+****************************************************************************************************
+*** Child process 3 acquired semaphore
+*** Child process 3 doing some work
+****************************************************************************************************
+*** 3
+*** Parent waiting for exec with status: -1
+*** children at work
+*** All child processes finished, final status: 100
+*** 4

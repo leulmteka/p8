@@ -1,0 +1,11 @@
+*** Yay! We have semaphores!
+*** Starting in the parent
+*** We should be in the child now...
+*** argc = 4
+*** Back to the parent now 666
+*** OKKKKKKKKKK Time to Test Open
+*** Yay! Open wasn't a flop....hopefully
+*** Time to toughen things up a bit >:)
+*** Yay! You didn't open a non-existent file!
+*** Now for the true test...can the user read and alter space they should't?
+*** Yay! You made it all the way through!

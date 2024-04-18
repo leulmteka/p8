@@ -1,0 +1,6 @@
+*** semaphore down works. Success 
+*** semaphore up works. Success 
+*** in child one
+*** in the second child
+*** test for semaphore inside a fork passed.
+*** Yay! Test passed.

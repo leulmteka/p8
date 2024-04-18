@@ -1,0 +1,32 @@
+*** Testing your kernel's memory protection!
+***
+*** When a user program does something bad, like try to access an
+*** invalid pointer, it shouldn't cause the kernel to panic -- it
+*** should instead force the program to exit.
+***
+*** #### Begin tests:
+*** ## Test 0: checking that fork works.
+*** in child
+*** ## end test 0
+***
+*** ## test 1: Attempting to read kernel memory.
+*** in child
+*** ## end test 1
+***
+*** ## test 2: Attempting to write to kernel memory.
+*** (this test is likely to hang or crash if your kernel fails it)
+*** in child
+*** Filling kernel memory with zeroes...
+*** ## end test 2
+***
+*** ## test 3: Attempting null-pointer dereference.
+*** in child
+*** ## end test 3
+*** ## test 4: Execl argument checks.
+***
+*** in child
+*** calling execl(NULL, NULL)
+*** success
+*** calling execl("/sbin/not-init", "not-init", NULL)
+*** success
+*** ## end test 4

@@ -1,0 +1,36 @@
+*** 1
+*** init
+*** fd = 3
+*** len = 325
+*** According to all known laws
+*** of aviation,
+*** 
+*** 
+*** there is no way a bee
+*** should be able to fly.
+***  
+***  
+*** Its wings are too small to get
+*** its fat little body off the ground.
+***  
+***  
+*** The bee, of course, flies anyway
+***  
+***  
+*** because bees don't care
+*** what humans think is impossible.
+*** close = 0
+*** fd = 3
+*** len = -1
+*** libc.c:27 read error, fd = 3
+*** fd = -1
+*** len = -1
+*** libc.c:27 read error, fd = -1
+*** open again 3
+*** seek 260
+*** in child
+*** argc = 1
+*** argv[0]=in
+*** because bees don't care
+*** what humans think is impossible.
+*** back from wait 420

@@ -1,0 +1,6 @@
+*** Error opening nonexistent file
+*** Error reading from invalid file descriptor
+*** Error closing invalid file descriptor
+*** Error closing file descriptor twice
+*** Error waiting for invalid process ID
+*** Error executing nonexistent program

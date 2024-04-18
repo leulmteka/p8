@@ -1,0 +1,28 @@
+*** Parent process started
+*** Parent process doing some work
+*** Parent process working: 0
+*** Parent process working: 1
+*** Parent process working: 2
+*** Parent process working: 3
+*** Parent process working: 4
+*** Parent process releasing semaphore 1
+*** Child process 1 started
+*** Child process 1 doing some work
+*** Child process 1 working: 0
+*** Child process 1 working: 1
+*** Child process 1 working: 2
+*** Child process 1 finished, releasing semaphore 2
+*** Child process 2 started
+*** Child process 2 doing some work
+*** Child process 2 working: 0
+*** Child process 2 working: 1
+*** Child process 2 working: 2
+*** Child process 2 working: 3
+*** Child process 2 finished, releasing semaphore 3
+*** Parent process finished waiting for child process 1, status: 0
+*** Parent process finished waiting for child process 2, status: 0
+*** Parent process finished
+*** Creating more semaphores to check for proper error return value
+*** Error return value for creating many semaphores is < 0: -1
+*** Error return value for down is < 0 which indicates a failure: -1
+*** Error return value for up is < 0 which indicates a failure: -1

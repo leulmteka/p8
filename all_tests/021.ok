@@ -1,0 +1,31 @@
+*** Welcome to the test case! 
+*** Test 1: Opening the same file many times
+*** fd = 4
+*** fd = 5
+*** fd = 6
+*** fd = 7
+*** cardigan by taylor swift
+*** fd = 7
+*** len = 1720
+*** And when I felt like I was an old cardigan
+*** Under someone's bed
+*** You put me on and said I was your favorite
+*** Test 2: Trying to write to a file
+*** Result from write: -1
+*** Test 3: Execl from a non-existent file 
+*** Result post execl: -1
+*** Test 4: Closing files 
+*** completed closing 
+*** Test 5: Opening a file to stdin previous location 
+*** infinitely ordinary by the wrecks
+*** fd = 0
+*** Test 5 cont: in fork 
+*** in child
+*** teenage dream by olivia rodrigo
+*** previous song << 
+*** I remember when I learned how to slow down
+*** back from wait (also the age in teenage dream...) 19
+*** karma is a cat, purring in my lap because it loves me!! congrats, you passed all the tests!!
+*** /\_/\
+***( o.o )
+*** > ^ <

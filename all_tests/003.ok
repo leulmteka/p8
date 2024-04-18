@@ -1,0 +1,5 @@
+*** Test Start
+*** Correctly could not find a file that doesn't exist!
+*** Correctly did not cause an error from seeking past size of file!
+*** Correctly handled double closes!
+*** Correctly failed to execute a nonexistent file!

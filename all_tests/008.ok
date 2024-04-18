@@ -1,0 +1,13 @@
+*** open and len... Check
+*** read nothing... Check
+*** don't open the kernel... Check
+*** read 4 chars... Check
+*** Did this line output with asterisks??
+*** read some more... Check
+*** to find water
+*** seek start... Check
+*** to find water, you must first find Dirt.
+*** seek 19... Check
+*** you must first find Dirt.
+*** kernel memory intact... Check
+*** fork, wait, and sem... Check

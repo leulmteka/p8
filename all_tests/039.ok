@@ -1,0 +1,71 @@
+*** 1
+*** init
+*** fd = 3
+*** len = 76
+*** SO
+*** MAGNETIC
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** close = 0
+*** fd = 3
+*** len = -1
+*** libc.c:29 read error, fd = 3
+*** fd = 100
+*** len = -1
+*** libc.c:29 read error, fd = 100
+*** open again 3
+*** seek 17
+*** in child
+*** argc = 4
+*** argv[0]=shell
+*** argv[1]=a
+*** argv[2]=b
+*** argv[3]=c
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** DU
+*** back from wait 666
+*** Rude Boy
+*** 
+*** 
+*** Come here rude boy, boy, can you get it up?
+*** Come here rude boy, boy, is you big enough?
+*** Take it, take it, (Yeah) baby, baby (yeah)
+*** Take it, take it, (Yeah) love me, love me (yeah)
+***
+*** Come here rude boy, boy, can you get it up?
+*** Come here rude boy, boy, is you big enough?
+*** Take it, take it, (Yeah) baby, baby (yeah)
+*** Take it, take it, (Yeah) love me, love me (yeah)
+*** 
+*** Come here rude boy, boy, can you get it up?
+*** Come here rude boy, boy, is you big enough?
+*** Take it, take it, (Yeah) baby, baby (yeah)
+*** Take it, take it, (Yeah) love me, love me (yeah)
+*** 
+*** Come here rude boy, boy, can you get it up?
+*** Come here rude boy, boy, is you big enough?
+*** Take it, take it, (Yeah) baby, baby (yeah)
+*** Take it, take it, (Yeah) love me, love me (yeah)
+*** 
+*** Come here rude boy, boy, can you get it up?
+*** Come here rude boy, boy, is you big enough?
+*** Take it, take it, (Yeah) baby, baby (yeah)
+*** Take it, take it, (Yeah) love me, love me (yeah)
+*** 
+*** Come here rude boy, boy, can you get it up?
+*** Come here rude boy, boy, is you big enough?
+*** Take it, take it, (Yeah) baby, baby (yeah)
+*** Take it, take it, (Yeah) love me, love me (yeah)
+*** 

@@ -1,0 +1,4 @@
+*** 1
+*** init
+*** correctly handels noexistent files
+*** seeking larger than filesize didnt create an error!

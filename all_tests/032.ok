@@ -1,0 +1,28 @@
+*** ====== Open Test Cases: ======
+*** Basic Open Passed
+*** Open Invalid File Passed
+*** Open Same File Passed
+*** Closing Files Passed
+*** Open Length Passed
+*** ====== Invalid ID Test Cases: ======
+*** Successfully failed Non-existent ID Tests
+*** Successfuly failed Console Tests
+*** ====== Accessing Kernel Space Test Cases: ======
+*** Successfully failed Reading into Kernel & APICs
+*** Successfully failed Writing into Kernel & APICs
+*** ====== Fork Test Cases: ======
+*** Here's a little throwback Wait Test
+*** Successfully handled Kernel Wait Status
+*** Accessing Child Passed!
+*** Let's go somewhere... more private.
+*** Time
+*** To
+*** Do
+*** ====== Execl Test Cases: ======
+*** Passed the first test (since you're here!)
+*** Successfully Handled Non-ELF File!
+*** Successfully Handled Non-user Argument!
+*** Successfully Handled Non-user Path!
+*** ====== Return to Fork Tests: ======
+*** Successfully returned from Child
+*** ====== ALL TESTS PASSED ======

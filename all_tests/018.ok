@@ -1,0 +1,38 @@
+*** 1
+*** init
+*** Attempting to open file w/h invalid magic #'s...
+*** Checked for invalid magic #'s!
+*** Attempting to open file that's big-endian...
+*** Checked for endianess!
+*** Attempting to open file that's 64 bit addressed...
+*** Checked for bit mode!
+*** Attempting to open file targeted towards Linux Kernel...
+*** Checked for OS type!
+*** Attempting to open file with invalid version of ELF
+*** Checked for ELF Version!
+*** Attempting to execute an non-executible ELF file
+*** Checked for ELF file type
+*** Attempted to open an ELF with no program header
+*** Checked for Program Header offset
+*** Running a proper ELF file
+*** argc = 1
+*** argv[0]=/data/long_dir/Music/MFDoom/MM...FOOD/DOOM.txt
+***   .-''-.                      .--.  .-. .--------.                      .-''-.
+***  /      `'''--..              ||  \/  ||'=====. ||              ..--'''`      \
+*** |               '.            || .  . ||  .---' ||            .'               |
+*** |           ..''` '---.       || |\/|_||  '===. ||       .---' `''..           |
+*** |        .``           ''''\  ||_|\/|.'       |_||  /''''           ``.        |
+*** /'..   /`              /    /'|_.'            '._|'\    \              `\   ..'\
+*** |   `:'         ___..  \   /  /                  \  \   /  ..___         ':`   |
+*** '____'__...---'':::::\  '-' ./                    \. '-'  \:::::''---...__'____'
+***   \::/\ \:::::::::::':  ___/                        \___  :':::::::::::/ /\::/
+***    \'| \ '-:::--'`  .' /              Rest              \ '.  `'--:::-' / |'/
+***    /'|  \    ....''`__/                in                \__`''....    /  |'\
+***    \ |   .   |  .-'`   .------. .------..------. .-. .--.   `'-.  |   .   | /
+***     \/::.'   |  |      ||  _   V   _   ||   _   V  \/  ||      |  |   '.::\/
+***     \':'_.---|  |      || | |  |  | |  ||  | |  | .  . ||      |  |---._':'/
+***      \\      |  |      || | |  |   '|  ||  |'   | |\/| ||      |  |      //
+***      \\      |  |      || |' .'|'.   .'||'.   .'|'|\/| ||      |  |      //
+***       \\      | |      ||  .'.' '.'.'.'  '.'.'.' '|  | ||      | |      //
+***       \\      | |      ||.'.'     '.'      '.'       |.||      | |      //
+***        \\     |'       |_.'                          '._|       '|     //

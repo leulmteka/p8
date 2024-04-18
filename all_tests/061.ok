@@ -1,0 +1,23 @@
+*** This is my test! :D 
+*** fd = 3
+*** len = 43
+*** this is nice
+*** we can read and write
+*** fd = 7
+*** len = 43
+*** this is nice
+*** we can read and write
+*** fd = -1
+*** len = -1
+*** libc.c:27 read error, fd = -1
+*** fd = 8
+*** len = -1
+*** libc.c:27 read error, fd = 8
+*** Hi i'm child
+*** fd = 9
+*** len = 43
+*** this is nice
+*** we can read and write
+*** back in parent 
+*** fd = 9
+*** len = 43

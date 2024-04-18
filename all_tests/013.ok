@@ -1,0 +1,42 @@
+*** argc: 1
+*** argv: init
+*** let's begin our test
+
+*** testing open
+*** open test complete 
+
+*** testing reads
+*** in file 1
+*** read test complete 
+
+*** let's check some harder reads
+*** harder read test complete 
+*** harder read test complete 
+*** harder read test complete 
+
+*** testing seeks
+*** in file 1
+*** seek test complete 
+
+*** time to start forking
+*** child running 
+*** child2 running 
+*** argc: 2
+*** in file 2
+*** another fork?? 
+*** child2 running 
+*** argc: 2
+*** in file 3
+*** child1 resuming 
+*** parent resuming 
+*** fork test complete 
+
+*** random test
+*** closing reserved entries...
+*** random 1 complete
+*** in file 1
+*** random 2 complete
+*** in file 2
+*** random 3 complete
+*** in file 3
+*** num tests passed: 10 

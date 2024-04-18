@@ -1,0 +1,9 @@
+*** read() Security Check
+*** read() is secure
+*** write() Security Check
+*** write() is secure
+*** execl() Security Check
+*** execl() is secure
+*** wait() Security Check
+*** wait() is secure
+*** Good Job!

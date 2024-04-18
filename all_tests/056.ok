@@ -1,0 +1,33 @@
+*** 1
+*** init
+*** fd counter = 3
+*** length of file = 46
+*** we in champion fr fr
+*** but no drones :(
+*** fd counter = 4
+*** length of file = 46
+*** we in champion fr fr
+*** but no drones :(
+*** fd counter = 5
+*** length of file = 46
+*** we in champion fr fr
+*** but no drones :(
+*** fd counter = 6
+*** length of file = 46
+*** we in champion fr fr
+*** but no drones :(
+*** fd counter = 7
+*** length of file = 46
+*** we in champion fr fr
+*** but no drones :(
+*** fd counter = 8
+*** length of file = 46
+*** we in champion fr fr
+*** but no drones :(
+*** fd counter = 9
+*** length of file = 46
+*** we in champion fr fr
+*** but no drones :(
+*** fd counter = -1
+*** length of file = -1
+*** libc.c:27 read error, fd = -1

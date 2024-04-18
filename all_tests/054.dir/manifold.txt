@@ -1,0 +1,12 @@
+Definition 1. (Coordinate system, Chart, Parameterization) Let M be a topological space and U ⊆ M an open
+set. Let V ⊆ Rn be open. A homeomorphism φ : U → V, φ(u) = (x1(u), . . . , xn(u)) is called a coordinate system on
+U, and the functions x1, . . . xn the coordinate functions. The pair (U, φ) is called a chart on M. The inverse map φ−1
+is a parameterization of U.
+Definition 2. (Atlas, Transition maps) An atlas on M is a collection of charts {Uα, φα} such that Uα cover M. The
+homeomorphisms φβ φ−1
+α : φα(Uα ∩ Uβ ) → φβ (Uα ∩ Uβ ) are the transition maps or coordinate transformations.
+Recall that a topological space is second countable if the topology has a countable base, and Hausdorff if distinct
+points can be separated by neighbourhoods.
+Definition 3. (Topological manifold, Smooth manifold) A second countable, Hausdorff topological space M is
+an n-dimensional topological manifold if it admits an atlas {Uα, φα}, φα : Uα → Rn, n ∈ N. It is a smooth manifold if
+all transition maps are C∞ diffeomorphisms, that is, all partial derivatives exist and are continuous.

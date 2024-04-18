@@ -1,0 +1,23 @@
+*** Testing Open and Seek
+*** Code: 947 726 1234
+***
+*** Open Non-existent Files and Reopening File Test
+***
+*** Open Invalid File Test
+***
+*** Testing Symlink
+*** Passed Open and Symlink Tests!
+***
+*** Invalid Input Tests
+*** Successfully failed Non-existent ID Tests
+***
+*** Kernel Space Test
+*** Successfully failed Reading to Kernel Space
+***
+*** Fork Test
+*** in child
+*** argc = 3
+*** argv[0]=Checking
+*** argv[1]=Your
+*** argv[2]=Execl
+*** back from wait 420

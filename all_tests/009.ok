@@ -1,0 +1,19 @@
+*** start
+*** passed closing fd 0 and 2 test!
+*** passed new files in fd 0 and 2 test!
+*** passed full fdt test!
+*** Let the games begin...
+*** RAHHH
+*** RAHHH
+*** RAHHH
+*** RAHHH
+*** RAHHH
+*** RAHHH
+*** RAHHH
+*** RAHHH
+*** RAHHH
+*** Passed children stress test!
+*** close(child_id) test passed!
+*** close(file_id) test passed!
+*** close(sem_id) test passed!
+*** close failure test passed!
