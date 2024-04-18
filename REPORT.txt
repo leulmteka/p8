@@ -1,0 +1,31 @@
+- Describe how you keep track of open file offsets
+in my EFILE.h, which is a wrapper of the file class, i have a field to keep track of the
+offsets. when seek or read is called on it, i increment it by how much the system call wanted
+to. 
+- Explain why it's a good idea to copy the exec args in kernel space
+  before performing the exec
+It's because when we are in kernel space, we are about to clear the address space of the calling
+process. This effecively means we lose the arguments. We need to copy these arguments into the kernel
+address space, so that in between clearing the address space and calling the child process, we retain info.
+
+- List 3 security exposures that your implementation of exec addressed
+I check for validity of the path that is passed in, among other things like if it is a file.
+After confirming it is a valid file, I read in the presumed ELF data, such as program header information
+and magic numbers. Only after these checks is when code is executed, helping the safety of my system.
+I rigorously check the address space. It's the first thing I do. Under these checks, a user cannot access kernel/IOPIC/PIC
+- Read about the opendir system call. Why do we need a dedicated system
+  call for opening directories? Why not just open a directory as if it
+  were a file and look at its internal representation?
+directories have a different structure from files. There is a different interface required for directories, therefore requiring another
+sys call. If a malicious user got access to the bytes of a directory, rather than a file, they have the potential to disrupt the entire 
+filesystem; for a file they would only corrupt one file.
+- We implement the open, close, read, and write system calls. All
+  Unix-like systems have corresponding higher level library
+  functions: fopen, fclose, fread, and fwrite. How come?
+The kernel must be the only one with direct access to files. Without it, malicious users easily would be able to get into someones system
+and take valuable information. Users also have the potential of corrupting their system. With this, the kernel makes sure that the system 
+is protected and any error on the user's part will be simply a bug and won't have access to the entire system. The kernel is selfish in this
+manner.
+- Why does my implementation of SYS::exec set file to nullptr?
+Once the file is not needed, it should be set to nullptr. First of all it is a shared node, so removing references will prevent leaks in memory.
+second of all, the file living after it's served it's purpose could have disastrous effects, if something accidentally modifies it.
