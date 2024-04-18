@@ -16,9 +16,9 @@ class Process {
 	constexpr static int NCHILD = 10;
     constexpr static int NFILE = 10;
 
-    Shared<File> files[NFILE]{};
-	Shared<Semaphore> sems[NSEM]{};
-	Shared<Future<uint32_t>> children[NCHILD]{};
+    File* files[NFILE]{};
+	Semaphore* sems[NSEM]{};
+	Future<uint32_t>* children[NCHILD]{};
 	BlockingLock mutex{};
 
 	int getChildIndex(int id);
@@ -28,29 +28,30 @@ class Process {
     Atomic<uint32_t> ref_count {0};
 
 public:
-    Shared<Future<uint32_t>> output = Shared<Future<uint32_t>>::make();// { new Future<uint32_t>() };
+    Future<uint32_t>* output = new Future<uint32_t>();// { new Future<uint32_t>() };
     uint32_t *pd = gheith::make_pd();
-    static Shared<Process> kernelProcess;
+    static Process* kernelProcess;
 
 	Process(bool isInit);
 	virtual ~Process();
 
-	Shared<Process> fork(int& id);
+	Process* fork(int& id);
     void clear_private();
 
 	int newSemaphore(uint32_t init);
 
-	Shared<Semaphore> getSemaphore(int id);
+	Semaphore* getSemaphore(int id);
 
-    Shared<File> getFile(int fd) {
+    File* getFile(int fd) {
         auto i = getFileIndex(fd);
         if (i < 0) {
-            return Shared<File>();
+            //return Shared<File>();
+            return nullptr;
         }
         return files[fd];
     }
 
-    int setFile(Shared<File> file) {
+    int setFile(File* file) {
         for (auto i = 0; i<NFILE; i++) {
             auto f = files[i];
             if (f == nullptr) {
@@ -70,7 +71,7 @@ public:
 
 	static void init(void);
 
-    friend class Shared<Process>;
+    //friend class Shared<Process>;
     //friend class gheith::TCB;
 };
 

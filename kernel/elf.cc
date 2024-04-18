@@ -2,7 +2,7 @@
 #include "machine.h"
 #include "debug.h"
 
-uint32_t ELF::load(Shared<Node> file) {
+uint32_t ELF::load(Node* file) {
 #if 0
     //MISSING();
     return 0;

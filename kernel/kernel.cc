@@ -9,7 +9,9 @@ const char* initName = "/sbin/init";
 
 
 namespace gheith {
-    Shared<Ext2> root_fs = Shared<Ext2>::make(Shared<Ide>::make(1));
+    //Shared<Ext2> root_fs = Shared<Ext2>::make(Shared<Ide>::make(1));
+        Ext2* root_fs = new Ext2(new Ide(1));
+
 }
 
 void kernelMain(void) {

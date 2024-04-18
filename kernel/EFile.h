@@ -9,9 +9,9 @@
 class EFile : public File
 {
         uint32_t offset; //offset within file
-        Shared<Node> node;
+        Node* node;
 public:
-        EFile(Shared<Node> node) : offset(0), node(node) {}
+        EFile(Node* node) : offset(0), node(node) {}
         bool isFile() override { return true; }
         bool isDirectory() override { return false; }
         off_t seek(off_t off) { 

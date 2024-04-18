@@ -28,11 +28,11 @@ public:
         }
     }
 
-    friend class Shared<Barrier>;
+    //friend class Shared<Barrier>;
 };
 
 class ReusableBarrier {
-    Shared<InterruptSafeLock> the_lock;
+    InterruptSafeLock* the_lock;
     Condition newEpoch;
     uint32_t const initial_count;
     volatile uint32_t count;
@@ -66,7 +66,7 @@ public:
         the_lock->unlock();
     }
 
-    friend class Shared<ReusableBarrier>;
+    //friend class Shared<ReusableBarrier>;
 
 };
         

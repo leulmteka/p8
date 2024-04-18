@@ -37,16 +37,16 @@ public:
         return t;
     }
 
-    friend class Shared<Future<T>>;
+    //friend class Shared<Future<T>>;
 };
 
 namespace gheith {
     template <typename Out, typename T>
     struct TaskImpl : public TCBWithStack {
         T work;
-        Shared<Future<Out>> f;
+        Future<Out>* f;
     
-        TaskImpl(T work, Shared<Future<Out>> f) : TCBWithStack(), work(work), f(f) {
+        TaskImpl(T work, Future<Out>* f) : TCBWithStack(), work(work), f(f) {
         }
 
         ~TaskImpl() {
@@ -60,12 +60,12 @@ namespace gheith {
 }
 
 template <typename Out, typename T>
-Shared<Future<Out>> future(T work) {
+Future<Out>* future(T work) {
     using namespace gheith;
 
     delete_zombies();
 
-    auto f = Shared<Future<Out>>::make();
+    auto f = new Future<Out>();
 
     auto tcb = new TaskImpl<Out,T>(work,f);
     schedule(tcb);

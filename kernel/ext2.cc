@@ -13,7 +13,7 @@ void println(T& t) {
 }
 #endif
 
-Ext2::Ext2(Shared<Ide> ide): ide(ide), root(), ref_count(0) {
+Ext2::Ext2(Ide* ide): ide(ide), root(), ref_count(0) {
     SuperBlock sb;
 
     ide->read(1024,sb);
@@ -90,7 +90,7 @@ Ext2::Ext2(Shared<Ide> ide): ide(ide), root(), ref_count(0) {
     //println(sb.volume_name);
 }
 
-Shared<Node> Ext2::get_node(uint32_t number) {
+Node* Ext2::get_node(uint32_t number) {
     ASSERT(number > 0);
     ASSERT(number <= numberOfNodes);
     auto index = number - 1;
@@ -105,7 +105,9 @@ Shared<Node> Ext2::get_node(uint32_t number) {
     auto nodeOffset = iTableBase * blockSize + indexInGroup * iNodeSize;
     //Debug::printf("nodeOffset %d\n",nodeOffset);
 
-    auto out = Shared<Node>::make(ide,number,blockSize);
+    //auto out = Shared<Node>::make(ide,number,blockSize);
+    auto out = new Node(ide,number,blockSize);
+
     ide->read(nodeOffset,out->data);
     return out;
 }

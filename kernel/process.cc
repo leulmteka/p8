@@ -13,7 +13,8 @@ constexpr static uint32_t PROC = 0x10000000;
 constexpr static uint32_t SEM = 0x20000000;
 constexpr static uint32_t INDEX_MASK = 0x0FFFFFFF;
 
-Shared<Process> Process::kernelProcess = Shared<Process>::make(true);
+//Shared<Process> Process::kernelProcess = Shared<Process>::make(true);
+Process* Process::kernelProcess = new Process(true);
 
 
 void Process::init(void) {
@@ -21,7 +22,7 @@ void Process::init(void) {
 
 Process::Process(bool isInit) {
 	if (isInit) {
-		Shared<File> f{ new U8250File(new U8250()) };
+		File* f{ new U8250File(new U8250()) };
         files[0] = f;
         files[1] = f;
         files[2] = f;
@@ -39,19 +40,21 @@ int Process::newSemaphore(uint32_t init) {
 	for (int i=0; i<NSEM; i++) {
 		auto p = sems[i];
 		if (p == nullptr) {
-			sems[i] = Shared<Semaphore>::make(init);
+			//sems[i] = Shared<Semaphore>::make(init);
+			sems[i] = new Semaphore(init);
 			return SEM | (i & INDEX_MASK);
 		}
 	}
 	return -1;
 }
 
-Shared<Semaphore> Process::getSemaphore(int id) {
+Semaphore* Process::getSemaphore(int id) {
 	LockGuard<BlockingLock> g { mutex };
 
 	int idx = id & INDEX_MASK;
 	if ((idx >= NSEM) || ((id & 0xF0000000) != SEM)) {
-		return Shared<Semaphore>{};
+		//return Shared<Semaphore>{};
+		return nullptr;
 	}
 	return sems[idx];
 }
@@ -64,7 +67,7 @@ void Process::clear_private() {
 	delete_private(pd);
 }
 
-Shared<Process> Process::fork(int& id) {
+Process* Process::fork(int& id) {
 	LockGuard<BlockingLock> lock { mutex };
 
 	int index = -1;
@@ -79,10 +82,12 @@ Shared<Process> Process::fork(int& id) {
 
 	if (index == -1) {
 		id = -1;
-		return Shared<Process>{};
+		//return Shared<Process>{};
+		return nullptr;
 	}
 
-	auto child = Shared<Process>::make(false);
+	//auto child = Shared<Process>::make(false);
+	auto child = new Process(false);
 
 	// copy the private portion of the address space
 	for (unsigned pdi=512; pdi<1024; pdi++) {

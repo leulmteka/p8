@@ -7,26 +7,11 @@ template <typename T>
 class Shared {
     T* ptr;
 
-    void drop() {
-        if (ptr != nullptr) {
-            auto new_count = ptr->ref_count.add_fetch(-1);
-            if (new_count == 0) {
-                delete ptr;
-                ptr = nullptr;
-            }
-        }
-    }
-
-    void add() {
-        if (ptr != nullptr) {
-            ptr->ref_count.add_fetch(1);
-        }
-    }
 
 public:
 
     explicit Shared(T* it) : ptr(it) {
-        add();
+        //add();
     }
 
     //
@@ -43,19 +28,19 @@ public:
     // return c;
     //
     Shared(const Shared& rhs): ptr(rhs.ptr) {
-        add();
+        //add();
     }
 
     //
     // Shared<Thing> d = g();
     //
     Shared(Shared&& rhs): ptr(rhs.ptr) {
-        rhs.ptr = nullptr;
+        //rhs.ptr = nullptr;
     }
 
-    ~Shared() {
-        drop();
-    }
+    // ~Shared() {
+    //     drop();
+    // }
 
     // d->m();
     T* operator -> () const {
@@ -66,9 +51,9 @@ public:
     // d = new Thing{};
     Shared<T>& operator=(T* rhs) {
         if (this->ptr != rhs) {
-            drop();
+            //drop();
             this->ptr = rhs;
-            add();
+           // add();
         }
         return *this;
     }
@@ -76,18 +61,18 @@ public:
     // d = a;
     // d = Thing{};
     Shared<T>& operator=(const Shared<T>& rhs) {
-        auto other_ptr = rhs.ptr;
+       auto other_ptr = rhs.ptr;
         if (ptr != other_ptr) {
-            drop();
+            //drop();
             ptr = other_ptr;
-            add();
+            //add();
         }
         return *this;
     }
 
     // d = g();
     Shared<T>& operator=(Shared<T>&& rhs) {
-        drop();
+        // drop();
         ptr = rhs.ptr;
         rhs.ptr = nullptr;
         
@@ -111,10 +96,10 @@ public:
     }
 
     // e = Shared<Thing>::make(1,2,3);
-    template <typename... Args>
-    static Shared<T> make(Args... args) {
-        return Shared<T>{new T(args...)};
-    }
+    // template <typename... Args>
+    // static Shared<T> make(Args... args) {
+    //     return Shared<T>{new T(args...)};
+    // }
 
 };
 

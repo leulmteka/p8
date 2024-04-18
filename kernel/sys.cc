@@ -21,7 +21,7 @@ int SYS::exec(const char *path, int argc, const char *argv[])
     using namespace gheith;
 
     TCB *me = current();
-    Shared<Process> MeProcess = me->process;
+    Process* MeProcess = me->process;
 
     if (path == nullptr)
     {
@@ -155,7 +155,7 @@ extern "C" int sysHandler(uint32_t eax, uint32_t *frame)
 
     auto me = current();
 
-    Shared<Process> process = me->process;
+    Process* process = me->process;
     uint32_t *userEsp = (uint32_t *)frame[3];
 
     uint32_t userPC = frame[0];
@@ -294,7 +294,7 @@ extern "C" int sysHandler(uint32_t eax, uint32_t *frame)
         }
         argv[argc] = nullptr;
 
-        Shared<Node> nodeForElf = root_fs->find(root_fs->root, path);
+        Node* nodeForElf = root_fs->find(root_fs->root, path);
         if (nodeForElf == nullptr || !nodeForElf->is_file())
         {
             //   Debug::printf("*** HELLO 26\n");
@@ -329,7 +329,7 @@ extern "C" int sysHandler(uint32_t eax, uint32_t *frame)
             return -1;
         }
 
-        Shared<Node> files = root_fs->find(root_fs->root, path);
+        Node* files = root_fs->find(root_fs->root, path);
         if (files == nullptr)
         {
             //   Debug::printf("*** HELLO 30\n");
@@ -345,7 +345,7 @@ extern "C" int sysHandler(uint32_t eax, uint32_t *frame)
             files = root_fs->find(root_fs->root, buf);
         }
 
-        Shared<File> fileWrapper{new FileWrapper(files)};
+        File* fileWrapper{new FileWrapper(files)};
         auto MeProcess = current()->process;
         int fd = MeProcess->setFile(fileWrapper);
         return fd;

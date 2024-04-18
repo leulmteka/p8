@@ -159,7 +159,9 @@ extern "C" void kernelInit(void) {
 
     auto myOrder = howManyAreHere.add_fetch(1);
     if (myOrder == kConfig.totalProcs) {
-        auto initProc = Shared<Process>::make(true);
+        //auto initProc = Shared<Process>::make(true);
+        auto initProc = new Process(true);
+
         thread(initProc,[] {
             kernelMain();
             Debug::shutdown();

@@ -50,9 +50,9 @@ namespace gheith {
     template <typename Out, typename Work>
     struct StreamImpl : public TCBWithStack {
         Work work;
-        Shared<BoundedBuffer<Out>> buffer;
+        BoundedBuffer<Out> *buffer;
     
-        StreamImpl(uint32_t N, Work work) : TCBWithStack(), work(work), buffer(Shared<BoundedBuffer<Out>>::make(N)) {
+        StreamImpl(uint32_t N, Work work) : TCBWithStack(), work(work), buffer(new BoundedBuffer<Out>(N)) {
         }
 
         ~StreamImpl() {
@@ -66,7 +66,7 @@ namespace gheith {
 }
 
 template <typename Out, typename Work>
-Shared<BoundedBuffer<Out>> stream(uint32_t N, Work work) {
+BoundedBuffer<Out>* stream(uint32_t N, Work work) {
     using namespace gheith;
 
     delete_zombies();

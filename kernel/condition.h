@@ -16,13 +16,13 @@
 
 class Condition {
 
-    Shared<InterruptSafeLock> the_lock;
+    InterruptSafeLock* the_lock;
     uint64_t epoch;
     Queue<gheith::TCB,NoLock> queue;
     Atomic<uint32_t> ref_count;
 public:
 
-    Condition(Shared<InterruptSafeLock> the_lock) : the_lock(the_lock), epoch(), queue(), ref_count(0) {}
+    Condition(InterruptSafeLock* the_lock) : the_lock(the_lock), epoch(), queue(), ref_count(0) {}
 
     Condition(const Condition&) = delete;
     Condition(Condition&&) = delete;
@@ -125,7 +125,7 @@ public:
         notify(~((uint64_t)0));
     }
 
-    friend class Shared<Condition>;
+   // friend class Shared<Condition>;
 
 };
 

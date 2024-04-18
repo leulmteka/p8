@@ -60,7 +60,7 @@ namespace gheith {
         }
     };
 
-    TCB::TCB(Shared<Process> process, bool isIdle) :
+    TCB::TCB(Process* process, bool isIdle) :
         isIdle(isIdle), id(next_id.fetch_add(1)), process{process}
     {
         saveArea.tcb = this;
@@ -71,7 +71,7 @@ namespace gheith {
     }
 
     // TCBWithStack
-    TCBWithStack::TCBWithStack(Shared<Process> process) : TCB(process,false) {
+    TCBWithStack::TCBWithStack(Process* process) : TCB(process,false) {
         stack[STACK_WORDS - 2] = 0x200;  // EFLAGS: IF
         stack[STACK_WORDS - 1] = (uint32_t) entry;
 	    saveArea.no_preempt = 0;

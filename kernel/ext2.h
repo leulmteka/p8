@@ -111,7 +111,7 @@ struct NodeData {
 class Node : public BlockIO { // we implement BlockIO because we
                               // represent data
 
-    Shared<Ide> ide;
+    Ide* ide;
     Atomic<uint32_t> ref_count;
 
 public:
@@ -120,9 +120,10 @@ public:
     const uint32_t number;
     NodeData data;
 
-    Node(Shared<Ide> ide, uint32_t number, uint32_t block_size) : BlockIO(block_size), ide(ide), ref_count(0), number(number) {
+    Node(Ide* ide, uint32_t number, uint32_t block_size) : BlockIO(block_size), ide(ide), ref_count(0), number(number) {
 
     }
+
 
     virtual ~Node() {}
 
@@ -204,17 +205,17 @@ public:
     // Panics if not a directory
     uint32_t entry_count();
 
-    friend class Shared<Node>;
+    //friend class Shared<Node>;
 };
 
 
 // This class encapsulates the implementation of the Ext2 file system
 class Ext2 {
     // The device on which the file system resides
-    Shared<Ide> ide;
+    Ide* ide;
 public:
     // The root directory for this file system
-    Shared<Node> root;
+    Node* root;
 private:
     Atomic<uint32_t> ref_count;
     uint32_t blockSize;
@@ -227,9 +228,9 @@ private:
 public:
     // Mount an existing file system residing on the given device
     // Panics if the file system is invalid
-    Ext2(Shared<Ide> ide);
+    Ext2(Ide* ide);
 
-    friend class Shared<Ext2>;
+    //friend class Shared<Ext2>;
 
     // Returns the block size of the file system. Doesn't have
     // to match that of the underlying device
@@ -245,7 +246,7 @@ public:
     }
 
     // Returns the node with the given i-number
-    Shared<Node> get_node(uint32_t number);
+    Node* get_node(uint32_t number);
 
     // If the given node is a directory, return a reference to the
     // node linked to that name in the directory.
@@ -253,7 +254,7 @@ public:
     // Returns a null reference if "name" doesn't exist in the directory
     //
     // Panics if "dir" is not a directory
-    Shared<Node> find(Shared<Node> current, const char* path) {
+    Node* find(Node* current, const char* path) {
         auto part = new char[257];
         uint32_t idx = 0;
 
@@ -273,7 +274,8 @@ public:
             part[i] = 0;
             auto number = current->find(part);
             if (number == 0) {
-                current = Shared<Node>{};
+                //current = new Node*();//
+                current = 0;
                 goto done;
             } else {
                 current = get_node(number);

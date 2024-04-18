@@ -42,7 +42,7 @@ public:
         return ~(uint32_t(0));
     }
 
-    friend class Shared<Ide>;
+    //friend class Shared<Ide>;
 };
 
 #endif

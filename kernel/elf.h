@@ -6,7 +6,7 @@
 
 class ELF {
 public:
-    static uint32_t load(Shared<Node> file);
+    static uint32_t load(Node* file);
 };
 
 struct ElfHeader {

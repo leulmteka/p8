@@ -42,9 +42,9 @@ namespace gheith {
 
         SaveArea saveArea;
 
-        Shared<Process> process;
+        Process* process;
 
-        TCB(Shared<Process> process, bool isIdle);
+        TCB(Process* process, bool isIdle);
 
         virtual ~TCB();
 
@@ -122,7 +122,7 @@ namespace gheith {
     struct TCBWithStack : public TCB {
         uint32_t *stack = new uint32_t[STACK_WORDS];
     
-        TCBWithStack(Shared<Process> process);
+        TCBWithStack(Process* process);
 
         ~TCBWithStack();
 
@@ -136,7 +136,7 @@ namespace gheith {
     struct TCBImpl : public TCBWithStack {
         T work;
 
-        TCBImpl(Shared<Process> process, T work) : TCBWithStack(process), work(work) {
+        TCBImpl(Process* process, T work) : TCBWithStack(process), work(work) {
         }
 
         ~TCBImpl() {
@@ -157,7 +157,7 @@ extern void yield();
 
 
 template <typename T>
-void thread(Shared<Process> process, T work) {
+void thread(Process* process, T work) {
     using namespace gheith;
 
     delete_zombies();

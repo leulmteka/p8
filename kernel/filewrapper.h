@@ -6,10 +6,10 @@
 #include "ext2.h"
 
 class FileWrapper : public File {
-    Shared<Node> node;
+    Node* node;
     uint32_t curr = 0;
 public:
-    FileWrapper(Shared<Node> node) : node(node) {}
+    FileWrapper(Node* node) : node(node) {}
 
     bool isFile() override {
         return node->is_file();
