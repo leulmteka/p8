@@ -4,6 +4,7 @@
 #include "GarbageCollector.h"
 #include "stdint.h"
 #include "atomic.h"
+#include "blocking_lock.h"
 
 class MarkAndSweep : public GarbageCollector {
 private:
@@ -12,7 +13,9 @@ private:
 
     uint32_t* heap;
     uint32_t sizeOfHeap;
-    Atomic<uint32_t> freeListHead;
+    static int safe;
+    static int avail;
+    static BlockingLock *heapLock;
     
     //A Heap Lock? Concurrency? 
 
@@ -60,7 +63,7 @@ public:
 
     sizeOfHeap is the size of the heap in bytes
 
-    freeListHead is the head of the free list so we can keep track of of available mem blocks
+    array 
 
     markObject() marks the object
 
