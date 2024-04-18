@@ -21,7 +21,7 @@ private:
 
     void markObject(uint32_t* obj);
     void sweep();
-    uint32_t* allocateFreeMem(uint32_t size);
+    //uint32_t* allocateFreeMem(uint32_t size);
 
 
 public:
@@ -62,8 +62,6 @@ public:
     heap variable is a pointer to the start of hte heap mem
 
     sizeOfHeap is the size of the heap in bytes
-
-    array 
 
     markObject() marks the object
 
