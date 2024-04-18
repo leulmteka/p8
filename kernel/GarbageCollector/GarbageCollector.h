@@ -17,6 +17,8 @@ public:
     virtual void garbageCollect() = 0;
 
     virtual void endCollection() = 0;
+
+    //We can also use methods from heap.cc such as new and delete here.
 };
 
 #endif
