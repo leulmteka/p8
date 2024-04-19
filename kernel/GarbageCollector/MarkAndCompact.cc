@@ -1,9 +1,20 @@
 #include "MarkAndCompact.h"
 #include "debug.h"
+#include "blocking_lock.h"
+#include "semaphore.h"
+#include "atomic.h"
+#include "shared.h"
+#include "threads.h"
+#include "config.h"
+#include "process.h"
 
 int MarkAndCompact::safe = 0;
 int MarkAndCompact::avail = 0;
 BlockingLock *MarkAndCompact::heapLock = nullptr;
+uint32_t **MarkAndCompact::globalObjects = nullptr;
+uint32_t **MarkAndCompact::staticObjects = nullptr;
+uint32_t MarkAndCompact::numGlobalObjects = 0;
+uint32_t MarkAndCompact::numStaticObjects = 0;
 
 MarkAndCompact::MarkAndCompact(void *heapStart, size_t heapBytes)
 {
@@ -12,6 +23,9 @@ MarkAndCompact::MarkAndCompact(void *heapStart, size_t heapBytes)
     compactPointer = nullptr;
 
     heapLock = new BlockingLock();
+
+    globalObjects = new uint32_t *[MAX_GLOBAL_OBJECTS];
+    staticObjects = new uint32_t *[MAX_STATIC_OBJECTS];
 
     for (uint32_t i = 0; i < sizeOfHeap; i++)
     {
@@ -22,6 +36,8 @@ MarkAndCompact::MarkAndCompact(void *heapStart, size_t heapBytes)
 MarkAndCompact::~MarkAndCompact()
 {
     delete heapLock;
+    delete[] globalObjects;
+    delete[] staticObjects;
 }
 
 void *MarkAndCompact::allocate(size_t size)
@@ -149,6 +165,16 @@ bool MarkAndCompact::isMarked(uint32_t *obj)
 
 void MarkAndCompact::garbageCollect()
 {
+    for (uint32_t i = 0; i < numGlobalObjects; i++)
+    {
+        markObject(globalObjects[i]);
+    }
+
+    for (uint32_t i = 0; i < numStaticObjects; i++)
+    {
+        markObject(staticObjects[i]);
+    }
+
     for (uint32_t i = 0; i < kConfig.totalProcs; i++)
     {
         if (gheith::activeThreads[i] != nullptr)
@@ -197,4 +223,14 @@ void MarkAndCompact::endCollection()
     }
 
     heapLock->unlock();
+}
+
+void MarkAndCompact::addGlobalObject(uint32_t *obj)
+{
+    globalObjects[numGlobalObjects++] = obj;
+}
+
+void MarkAndCompact::addStaticObject(uint32_t *obj)
+{
+    staticObjects[numStaticObjects++] = obj;
 }

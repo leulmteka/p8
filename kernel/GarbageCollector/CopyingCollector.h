@@ -3,18 +3,31 @@
 
 #include "GarbageCollector.h"
 #include "stdint.h"
+#include "debug.h"
+#include "blocking_lock.h"
+#include "semaphore.h"
 #include "atomic.h"
+#include "shared.h"
+#include "threads.h"
+#include "config.h"
+#include "process.h"
 
 class CopyingCollector : public GarbageCollector {
 private:
     static const uint32_t MARK_BIT = 0x80000000;
     static const uint32_t SIZE_MASK = 0x7FFFFFFF;
+    static const size_t MAX_GLOBAL_OBJECTS = 1024;
+    static const size_t MAX_STATIC_OBJECTS = 1024;
 
     uint32_t* fromLocation;
     uint32_t* toLocation;
     uint32_t sizeOfSpace;
     uint32_t* allocPointer;
     uint32_t* scanPointer;
+    static uint32_t **globalObjects;
+    static uint32_t **staticObjects;
+    static uint32_t numGlobalObjects;
+    static uint32_t numStaticObjects;
 
     void* copying(void* obj);
     void* forward(void* obj);
@@ -34,6 +47,9 @@ public:
     void beginCollection() override;
     void garbageCollect() override;
     void endCollection() override;
+
+    static void addGlobalObject(uint32_t *obj);
+    static void addStaticObject(uint32_t *obj);
 };
 
 #endif
