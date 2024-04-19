@@ -8,6 +8,8 @@
 
 class MarkAndSweep : public GarbageCollector {
 private:
+
+    //h
     static const uint32_t MARKED = 0x80000000;
     static const uint32_t GET_SIZE = 0x7FFFFFFF;
     static const size_t MAX_GLOBAL_OBJECTS = 1024;
@@ -23,27 +25,48 @@ private:
     static uint32_t** staticObjects;
     static uint32_t numGlobalObjects;
     static uint32_t numStaticObjects;
+
+    bool* marks;
+
     
     //A Heap Lock? Concurrency? 
 
-    void markObject(uint32_t* obj);
-    bool isPointer(uint32_t* field);
-    void sweep();
+    bool isPointer(uint32_t* field) {return true;};
+    void sweep() {};
     //uint32_t* allocateFreeMem(uint32_t size);
 
 
 public:
-    MarkAndSweep(void* heapStart, size_t bytes);
-    ~MarkAndSweep();
+    MarkAndSweep(void* heapStart, size_t bytes){
+        marks = new bool[bytes/sizeof(uint32_t)];
+        //marks[bytes/sizeof(uint32_t)];
+        // for(uint32_t i = 0; i < bytes/sizeof(uint32_t); i++){
+        //     Debug::printf("%d\n", marks[i]);
+        // }
+    }
+    ~MarkAndSweep(){};
 
-    void* allocate(size_t size) override;
-    void free(void* ptr) override;
-    void beginCollection() override;
-    void garbageCollect() override;
-    void endCollection() override;
+    void* allocate(size_t size) override{return nullptr;};
+    void free(void* ptr) override{};
+    void beginCollection() override{};
+    void garbageCollect() override{};
+    void endCollection() override{};
 
-    static void addGlobalObject(uint32_t* obj);
-    static void addStaticObject(uint32_t* obj);
+    static void addGlobalObject(uint32_t* obj){};
+    static void addStaticObject(uint32_t* obj){};
+
+    void markBlock(int blockIndex) {
+        // Set the mark for a block
+        //if (blockIndex < marks.size()) {
+            marks[blockIndex] = true;
+        //}
+    }
+    void unmarkBlock(int blockIndex) {
+        // Clear the mark for a block
+       
+        marks[blockIndex] = false;
+    }
+
 };
 
 #endif

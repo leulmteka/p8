@@ -3,17 +3,18 @@
 #include "stdint.h"
 #include "blocking_lock.h"
 #include "atomic.h"
-
+#include "GarbageCollector/MarkAndSweep.h"
 /* A first-fit heap */
 
 
 namespace gheith {
     
-static int *array;
+static int *array; //a "free" list
 static int len;
 static int safe = 0;
-static int avail = 0;
+static int avail = 0; // head of free list
 static BlockingLock *theLock = nullptr;
+static MarkAndSweep* GC = nullptr;
 
 void makeTaken(int i, int ints);
 void makeAvail(int i, int ints);
@@ -121,6 +122,21 @@ int isAvail(int i) {
 int isTaken(int i) {
     return array[i] < 0;
 }
+void printHeap()
+{
+    int p = 0;
+    while (p < len)
+    {
+        int blockSize = abs(size(p)); // Get the absolute size to print regardless of block status
+        if (isAvail(p)) {
+            int headerValue = array[p];                   // This is the header value which contains size and status (positive if available)
+            //int footerValue = array[footerFromHeader(p)]; // Footer value for consistency check
+            Debug::printf("| Free Block at %d: header = %d, size = %d, footer = %d\n",
+                p, headerValue, blockSize, footerFromHeader(p));
+        }
+        p += blockSize; // Move to the next block
+    }
+}
 };
 
 void heapInit(void* base, size_t bytes) {
@@ -135,12 +151,14 @@ void heapInit(void* base, size_t bytes) {
     makeAvail(2,len-4);
     makeTaken(len-2,2);
     theLock = new BlockingLock();
+    GC = new MarkAndSweep(base, bytes); //for now    
+    Debug::printf("%x i\n", GC);
 }
 
 void* malloc(size_t bytes) {
     using namespace gheith;
     //Debug::printf("malloc(%d)\n",bytes);
-    if (bytes == 0) return (void*) array;
+    if (bytes == 0) return (void*) array;   
 
     int ints = ((bytes + 3) / 4) + 2;
     if (ints < 4) ints = 4;
@@ -201,6 +219,7 @@ void free(void* p) {
         Debug::panic("freeing free block, p:%x idx:%d\n",(uint32_t) p,(int32_t) idx);
         return;
     }
+    GC->unmarkBlock(idx);
 
     int sz = size(idx);
 
@@ -219,6 +238,7 @@ void free(void* p) {
     }
 
     makeAvail(idx,sz);
+    //printHeap();
 }
 
 
