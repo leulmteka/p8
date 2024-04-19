@@ -16,10 +16,12 @@ private:
     static int safe;
     static int avail;
     static BlockingLock *heapLock;
+    static bool interruptState;
     
     //A Heap Lock? Concurrency? 
 
     void markObject(uint32_t* obj);
+    bool isPointer(uint32_t* field);
     void sweep();
     //uint32_t* allocateFreeMem(uint32_t size);
 
