@@ -1,0 +1,66 @@
+(1) What will you do?
+    For this project, we are implementing three different types of garbage collector: Mark-and-Sweep, Mark-and-Compact, and Copying Collector.
+    Each garbage collection algorithm is implemented seperately. After implementing the three types of garbage collectors, we will implement 
+    stress tests to compare and contrast speed and memory efficiency between no garbage collection, shared pointers, and 
+    the three we will be implementing (Mark-and-Sweep, Mark-and-Compact, and Copying Collector).  This will include developing specific tests for each 
+    algorithm and benchmarks to compare their performance under various conditions. Finally, we document each component and test results.
+    If we have additional time, we will optimize the heap and try to implement concurrent mark and sweep.
+
+(2) Who are the team members?
+    Harun Bozkus and Leul Teka.
+
+(3) What research did you do? Links to articles, papers, etc.
+    Before starting this project, we had to do research on how to implement garbage collection. In order to do this, we used to following resources:
+
+    https://wiki.osdev.org/Garbage_collection
+
+    https://www.cs.cornell.edu/courses/cs312/2003fa/lectures/sec24.htm
+
+    https://www.cs.cmu.edu/~janh/courses/411/23/lec/23-gc.pdf
+
+    https://wiki.c2.com/?MarkAndSweep
+
+    https://www.geeksforgeeks.org/mark-and-sweep-garbage-collection-algorithm/
+
+    https://www.youtube.com/watch?v=c32zXYAK7CI
+
+    https://en.wikipedia.org/wiki/Mark%E2%80%93compact_algorithm#:~:text=The%20goal%20of%20mark%E2%80%93compact,memory%20addresses%20after%20the%20compaction.
+
+(4) Describe any design / implementation you did. Include code and documents
+    as appropriate
+    For this project, we have a GarbageCollector directory inside the kernel. Under the GarbageCollector directory, we have a base class (GarbageCollector.h).
+    This interface defines all the commonalities between each type of garbage collector (allocate, free, collecting garbage, starting and ending the garbage 
+    collection):
+            class GarbageCollector {
+            public:
+                virtual ~GarbageCollector() {}
+
+                virtual void* allocate(size_t size) = 0;
+
+                virtual void free(void* ptr) = 0;
+
+                virtual void beginCollection() = 0;
+
+                virtual void garbageCollect() = 0;
+
+                virtual void endCollection() = 0;
+
+            };
+
+    Each one of the garbage collector algorithms we implement is derived from the above base class, implementing a header file for each garbage collection each algorithm.
+    For mark and sweep, we traverse the objects and mark live objects then sweeping the memory to free unmarked objects. For mark and compact, we have a similar appraoch
+    of traversing objects and marking the live objects then instead of sweeping, we move the live objects to the beginning of our memory block, compacting the memory.
+    For copying collector,  we divide the heap into two pieces, copying the live objects from the half we are on to the other half. After, we switch the roles of the halves.
+    We also edit our heap to interact with the garbage collecting we have implemented. This is necessary in order to track all pointers or references in the system that the 
+    garbage collectors would need. 
+
+    The documentation for these are within the corresponding files.
+    The main methods for mark and sweep:
+        MarkAndSweep(), ~MarkAndSweep(), allocate(), beginCollection(), isPointer(), markObject(), sweep(), garbageCollect(), and endCollection().
+
+    The main methods for mark and compact:
+        MarkAndCompact(), ~MarkAndCompact(), allocate(), beginCollection(), markObject(), compact(), update(), isMarked(), garbageCollect(), endCollection()
+
+    The main methods for copying collector:
+        CopyingCollector(), ~CopyingCollector(), beginCollection(), copying(), forward(), isForwardAddress(), getForwardAddress(), setForwardAddress(), getSize()
+            flip(), updateReferences(), garbageCollect(), and endCollection()
