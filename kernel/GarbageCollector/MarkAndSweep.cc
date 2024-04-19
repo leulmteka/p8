@@ -4,6 +4,10 @@
 int MarkAndSweep::safe = 0;
 int MarkAndSweep::avail = 0;
 BlockingLock *MarkAndSweep::heapLock = nullptr;
+uint32_t **MarkAndSweep::globalObjects = nullptr;
+uint32_t **MarkAndSweep::staticObjects = nullptr;
+uint32_t MarkAndSweep::numGlobalObjects = 0;
+uint32_t MarkAndSweep::numStaticObjects = 0;
 
 MarkAndSweep::MarkAndSweep(void *heapStart, size_t bytes)
 {
@@ -12,39 +16,22 @@ MarkAndSweep::MarkAndSweep(void *heapStart, size_t bytes)
 
     heapLock = new BlockingLock();
 
-    for (uint32_t i = 0; i < sizeOfHeap; i++)
-    {
-        heap[i] = i + 1;
-    }
-    heap[sizeOfHeap - 1] = 0;
-    avail = 0;
-}
+    // Allocate memory for global and static object arrays
+    globalObjects = new uint32_t *[MAX_GLOBAL_OBJECTS];
+    staticObjects = new uint32_t *[MAX_STATIC_OBJECTS];
 
-MarkAndSweep::~MarkAndSweep()
-{
-    delete heapLock;
-}
-
-MarkAndSweep::MarkAndSweep(void *heapStart, size_t bytes)
-{
-    heap = (uint32_t *)heapStart;
-    sizeOfHeap = bytes / sizeof(uint32_t);
-
-    // Initialize the heap lock
-    heapLock = new BlockingLock();
-
-    // Initialize the heap with all memory available
     for (uint32_t i = 0; i < sizeOfHeap; i++)
     {
         heap[i] = 0;
     }
-    // heap[sizeOfHeap - 1] = 0;
     avail = 0;
 }
 
 MarkAndSweep::~MarkAndSweep()
 {
     delete heapLock;
+    delete[] globalObjects;
+    delete[] staticObjects;
 }
 
 void *MarkAndSweep::allocate(size_t size)
@@ -123,7 +110,7 @@ void MarkAndSweep::beginCollection()
     }
 
     interruptState = previousState;
-    //Interrupts::restore(previousState);
+    // Interrupts::restore(previousState);
 }
 
 bool MarkAndSweep::isPointer(uint32_t *field)
@@ -188,13 +175,23 @@ void MarkAndSweep::garbageCollect()
     // Traverse the object graph starting from the roots and mark all reachable objects
     // Identify the root objects based on your object graph
 
-    // Roots can include:
-    // - Global variables
-    // - Local variables on the stack
-    // - Registers
-    // - Static variables
+    // Roots can include: Global variables, Local variables on the stack, Registers, Static variables
 
-    // Example of marking root objects
+    // Global Variables
+    // A way to access and iterate over global variables (create a list or array of pointers to global objects)
+    for (uint32_t i = 0; i < numGlobalObjects; i++)
+    {
+        markObject(globalObjects[i]);
+    }
+
+    // Static Variables
+    //  A way to access and iterate over static variables (create a list or array of pointers to static objects)
+    for (uint32_t i = 0; i < numStaticObjects; i++)
+    {
+        markObject(staticObjects[i]);
+    }
+
+    // Local Variables and Registers
     for (uint32_t i = 0; i < kConfig.totalProcs; i++)
     {
         if (gheith::activeThreads[i] != nullptr)
@@ -238,18 +235,34 @@ void MarkAndSweep::garbageCollect()
 
 void MarkAndSweep::endCollection()
 {
-    for (uint32_t i = 0; i < kConfig.totalProcs; i++) {
-       if (gheith::activeThreads[i] != nullptr && !gheith::activeThreads[i]->isIdle) {
-           gheith::block(gheith::BlockOption::CanReturn, [](gheith::TCB* tcb) {
+    for (uint32_t i = 0; i < kConfig.totalProcs; i++)
+    {
+        if (gheith::activeThreads[i] != nullptr && !gheith::activeThreads[i]->isIdle)
+        {
+            gheith::block(gheith::BlockOption::CanReturn, [](gheith::TCB *tcb)
+                          {
                // Restore the thread's state
-               tcb->saveArea.no_preempt = 0;
-           });
-       }
-   }
+               tcb->saveArea.no_preempt = 0; });
+        }
+    }
 
-   // Restore interrupts
-   Interrupts::restore(interruptState);
+    // Restore interrupts
+    Interrupts::restore(interruptState);
 
-   // Release the heap lock
-   heapLock->unlock();
+    // Release the heap lock
+    heapLock->unlock();
+}
+
+/*
+    whenever a global or static object is created, you would call MarkAndSweep::addGlobalObject or MarkAndSweep::addStaticObject
+    to add it to the corresponding array.
+*/
+void MarkAndSweep::addGlobalObject(uint32_t *obj)
+{
+    globalObjects[numGlobalObjects++] = obj;
+}
+
+void MarkAndSweep::addStaticObject(uint32_t *obj)
+{
+    staticObjects[numStaticObjects++] = obj;
 }

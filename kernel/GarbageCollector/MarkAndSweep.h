@@ -10,6 +10,8 @@ class MarkAndSweep : public GarbageCollector {
 private:
     static const uint32_t MARKED = 0x80000000;
     static const uint32_t GET_SIZE = 0x7FFFFFFF;
+    static const size_t MAX_GLOBAL_OBJECTS = 1024;
+    static const size_t MAX_STATIC_OBJECTS = 1024;
 
     uint32_t* heap;
     uint32_t sizeOfHeap;
@@ -17,6 +19,10 @@ private:
     static int avail;
     static BlockingLock *heapLock;
     static bool interruptState;
+    static uint32_t** globalObjects;
+    static uint32_t** staticObjects;
+    static uint32_t numGlobalObjects;
+    static uint32_t numStaticObjects;
     
     //A Heap Lock? Concurrency? 
 
@@ -35,6 +41,9 @@ public:
     void beginCollection() override;
     void garbageCollect() override;
     void endCollection() override;
+
+    static void addGlobalObject(uint32_t* obj);
+    static void addStaticObject(uint32_t* obj);
 };
 
 #endif
