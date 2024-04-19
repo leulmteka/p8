@@ -3,8 +3,9 @@
     Each garbage collection algorithm is implemented seperately. After implementing the three types of garbage collectors, we will implement 
     stress tests to compare and contrast speed and memory efficiency between no garbage collection, shared pointers, and 
     the three we will be implementing (Mark-and-Sweep, Mark-and-Compact, and Copying Collector).  This will include developing specific tests for each 
-    algorithm and benchmarks to compare their performance under various conditions. Finally, we document each component and test results.
-    If we have additional time, we will optimize the heap and try to implement concurrent mark and sweep.
+    algorithm and benchmarks to compare their performance under various conditions. We will look at the total time it took for garbage collection, 
+    impact on performance, and Memory utilization and fragmentation. Finally, we document each component and test results. If we have additional time,
+    we will optimize the heap and try to implement concurrent mark and sweep.
 
 (2) Who are the team members?
     Harun Bozkus and Leul Teka.
@@ -64,3 +65,6 @@
     The main methods for copying collector:
         CopyingCollector(), ~CopyingCollector(), beginCollection(), copying(), forward(), isForwardAddress(), getForwardAddress(), setForwardAddress(), getSize()
             flip(), updateReferences(), garbageCollect(), and endCollection()
+
+    
+    How we are going to invoke garbage collection? other implementation details we had to decide on?
