@@ -165,7 +165,16 @@ ${TEST_RAWS} : %.raw : Makefile the_kernel %.data
 	@echo -n "$* ... "
 	@rm -f $*.raw $*.failure
 	@touch $*.failure
-	-(${TIME} --quiet -o $*.time -f "%E" ${QEMU_TIMEOUT_CMD} ${QEMU_TIMEOUT} valgrind --leak-check=full --log-file=$*.valgrind ${QEMU_CMD} ${QEMU_FLAGS} > $*.failure 2>&1); if [ $$? -eq 124 ]; then echo "timeout" > $*.failure; echo "timeout" > $*.time; fi
+	-(${TIME} --quiet -o $*.time -f "%E" ${QEMU_TIMEOUT_CMD} ${QEMU_TIMEOUT} ${QEMU_CMD} ${QEMU_FLAGS} > $*.raw 2>&1)
+	@if [ $$? -eq 124 ]; then echo "timeout" > $*.failure; echo "timeout" > $*.time; fi
+	@echo "Test $* execution completed."
+
+%.test.valgrind: 
+	@echo "Running Valgrind for $*..."
+	-${TIME} --quiet -o $*.time -f "%E" ${QEMU_TIMEOUT_CMD} ${QEMU_TIMEOUT} valgrind --leak-check=full --log-file=$*.valgrind ${QEMU_CMD} ${QEMU_FLAGS} > $*.raw 2>&1
+	@echo "Test $* executed with Valgrind."
+	@echo "Valgrind output for $*:"
+	@cat $*.valgrind
 
 BLOCK_SIZE = 1024
 
@@ -184,12 +193,11 @@ ${TEST_VALGRINDS} : %.valgrind : %.test
 	@cat $*.valgrind
 
 ${TEST_RESULTS} : %.result : Makefile %.diff
-	(test -z "`cat $*.diff`" && echo "pass" > $*.result) || echo "fail" > $*.result
-	echo "$* `cat $*.result` `cat $*.time` [`qemu-system-i386 --version | head -n 1`] [`g++ --version | head -n 1`] [`/bin/date`]" >> history
+	@test -z "`cat $*.diff`" && echo "pass" > $*.result || echo "fail" > $*.result
+	@echo "$* `cat $*.result` `cat $*.time` [`qemu-system-i386 --version | head -n 1`] [`g++ --version | head -n 1`] [`/bin/date`]" >> history
 
-${TEST_TARGETS} : %.test : Makefile %.result ${TEST_VALGRINDS}
+${TEST_TARGETS} : %.test : Makefile %.result
 	@echo "`cat $*.result` `cat $*.time`"
-	@cat $*.valgrind
 
 OTHER_USERS = ${shell who | sed -e 's/ .*//' | sort | uniq}
 HOW_MANY = ${shell who | sed -e 's/ .*//' | sort | uniq | wc -l}
