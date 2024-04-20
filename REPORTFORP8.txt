@@ -78,4 +78,5 @@
         This is accomplished by marking the blocks. We have divided our mark and sweep implementation into 4 distinct phases. The first phase is to stop all of the threads.
         In the second phase, we mark every heap object that is reachable, this includes the root objects such as global variables, static variables, local variables, and registers.
         In phase three, we sweep all of the garbage, effectively freeing memory. In the last phase, we restart all the threads that we had stopped in phase one. All of this is 
-        in a garbage collector thread being run continuously. 
+        in a garbage collector thread being run continuously (kind of like the reaper thread). 
+
