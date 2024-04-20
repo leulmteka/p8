@@ -7,6 +7,12 @@
     impact on performance, and Memory utilization and fragmentation. Finally, we document each component and test results. If we have additional time,
     we will optimize the heap and try to implement concurrent mark and sweep.
 
+    This week we were able to fully correctly implement Mark and Sweep. We have got done most of the implementation for Copying collector and Mark and Compact.
+
+    Components that we need to figure out
+        1. How to see how much memory leaks we have
+        2. How to see how much memory fragmentation we have
+
 (2) Who are the team members?
     Harun Bozkus and Leul Teka.
 
@@ -66,5 +72,10 @@
         CopyingCollector(), ~CopyingCollector(), beginCollection(), copying(), forward(), isForwardAddress(), getForwardAddress(), setForwardAddress(), getSize()
             flip(), updateReferences(), garbageCollect(), and endCollection()
 
-    
-    How we are going to invoke garbage collection? other implementation details we had to decide on?
+
+    Our design of mark and sweep:
+        To implement mark and sweep into our project, we have altered our existing heap. We use the garbage collecotr class to collect garbage from the existing heap.
+        This is accomplished by marking the blocks. We have divided our mark and sweep implementation into 4 distinct phases. The first phase is to stop all of the threads.
+        In the second phase, we mark every heap object that is reachable, this includes the root objects such as global variables, static variables, local variables, and registers.
+        In phase three, we sweep all of the garbage, effectively freeing memory. In the last phase, we restart all the threads that we had stopped in phase one. All of this is 
+        in a garbage collector thread being run continuously. 
