@@ -264,4 +264,3 @@ HISTORY_TESTS=${shell touch history; (cat history | cut -d ' ' -f 1 | tr ':' 'X'
 history: ${addsuffix .history,${HISTORY_TESTS}};
 
 -include *.d
-

@@ -9,12 +9,12 @@
 
 namespace gheith {
     
-static int *array; //a "free" list
-static int len;
-static int safe = 0;
+int *array; //a "free" list
+int len;
+int safe = 0;
 static int avail = 0; // head of free list
 static BlockingLock *theLock = nullptr;
-static MarkAndSweep* GC = nullptr;
+MarkAndSweep* GC = nullptr;
 
 void makeTaken(int i, int ints);
 void makeAvail(int i, int ints);
@@ -152,7 +152,7 @@ void heapInit(void* base, size_t bytes) {
     makeTaken(len-2,2);
     theLock = new BlockingLock();
     GC = new MarkAndSweep(base, bytes); //for now    
-    Debug::printf("%x i\n", GC);
+    Debug::printf("%x i\n", bytes);
 }
 
 void* malloc(size_t bytes) {
@@ -219,7 +219,7 @@ void free(void* p) {
         Debug::panic("freeing free block, p:%x idx:%d\n",(uint32_t) p,(int32_t) idx);
         return;
     }
-    GC->unmarkBlock(idx);
+    //GC->unmarkBlock(idx);
 
     int sz = size(idx);
 
@@ -246,9 +246,58 @@ void free(void* p) {
 /* C++ operators */
 /*****************/
 
+void MarkAndSweep::markBlock(void *ptr)
+{
+    // Calculate the index of the block header from the pointer
+    uintptr_t index = (((uintptr_t)ptr - (uintptr_t)gheith::array) / sizeof(int)) - 1;
+
+    // Check if the pointer is within the heap bounds
+    if (ptr >= gheith::array && ptr < gheith::array + gheith::len * sizeof(int))
+    {
+        // Check if the block at the index is taken
+        if (gheith::isTaken(index))
+        {
+            marks[index] = true; // Mark the block as reachable
+        }
+    }
+}
+void MarkAndSweep::sweep() {
+    int i = 0;
+    while (i < gheith::len) {
+        if (gheith::isTaken(i) && !marks[i]) {
+            // Free this block
+            int blockSize = gheith::size(i);
+            int totalSize = blockSize;
+            int startIndex = i;
+
+            // Check left adjacent block
+            int leftIndex = gheith::left(i);
+            if (gheith::isAvail(leftIndex)) {
+                totalSize += gheith::size(leftIndex);
+                startIndex = leftIndex;
+                gheith::remove(leftIndex);
+            }
+
+            // Check right adjacent block
+            int rightIndex = gheith::right(i + blockSize);
+            if (rightIndex < gheith::len && gheith::isAvail(rightIndex)) {
+                totalSize += gheith::size(rightIndex);
+                gheith::remove(rightIndex);
+            }
+
+            gheith::makeAvail(startIndex, totalSize);
+        }
+        i += gheith::size(i); // Move to the next block
+        marks[i] = false; // Reset mark for the next GC cycle
+    }
+}
+
 void* operator new(size_t size) {
-    void* p =  malloc(size);
+    void* p =  malloc(size); //ptr to data 
     if (p == 0) Debug::panic("out of memory");
+    int block = ((((uintptr_t)p) - ((uintptr_t)gheith::array)) / 4) - 1; //header block 
+    Debug::printf("block %d\n", gheith::array[block]);
+    //Debug::printf("size? %d\n", gheith::size(block));
     return p;
 }
 

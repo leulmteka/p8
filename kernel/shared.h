@@ -11,8 +11,8 @@ class Shared {
         if (ptr != nullptr) {
             auto new_count = ptr->ref_count.add_fetch(-1);
             if (new_count == 0) {
-                delete ptr;
-                ptr = nullptr;
+                //delete ptr;
+                //ptr = nullptr;
             }
         }
     }

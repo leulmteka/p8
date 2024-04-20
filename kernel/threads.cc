@@ -8,6 +8,7 @@
 #include "threads.h"
 #include "vmm.h"
 #include "process.h"
+#include "GarbageCollector/MarkAndSweep.h"
 
 
 
@@ -19,6 +20,13 @@ namespace gheith {
 
     Queue<TCB,InterruptSafeLock> readyQ{};
     Queue<TCB,InterruptSafeLock> zombies{};
+
+    Atomic<bool> worldStopped{false};
+    Queue<TCB,InterruptSafeLock> waitQ{};
+
+    extern MarkAndSweep* GC;
+    extern int* array;
+    extern int len;
 
     TCB* current() {
         auto was = Interrupts::disable();
@@ -45,7 +53,8 @@ namespace gheith {
 
     void schedule(TCB* tcb) {
         if (!tcb->isIdle) {
-            readyQ.add(tcb);
+            if(worldStopped) waitQ.add(tcb);
+            else readyQ.add(tcb);
         }
     }
 
@@ -84,6 +93,49 @@ namespace gheith {
             stack = nullptr;
         }
     }
+    void stopWorld(){
+        bool was = Interrupts::disable();
+
+        worldStopped.set(true);
+
+        TCB* tcb = readyQ.remove();
+        while(tcb != nullptr){
+            waitQ.add(tcb);
+            tcb = readyQ.remove();
+        }
+        Interrupts::restore(was);
+    }
+    void resumeWorld(){
+                bool was = Interrupts::disable();
+
+        worldStopped.set(false);
+
+
+            TCB* tcb = waitQ.remove();
+            while(tcb != nullptr){
+                schedule(tcb);
+                tcb = waitQ.remove();
+            }
+                    Interrupts::restore(was);
+    } 
+    void markPhase(){
+        for(uint32_t i = 0; i < kConfig.totalProcs; i++){
+            TCBWithStack* tcb = (TCBWithStack*) activeThreads[i];
+            if(tcb != nullptr && !tcb->isIdle){
+                uint32_t* stackStart = tcb->stack;
+                uint32_t* ESP = (uint32_t*)tcb->saveArea.esp;
+                //Debug::printf("esp %x\n", ESP);
+
+                for(uint32_t* ptr = ESP; ptr < &stackStart[STACK_WORDS]; ptr++){
+                    uint32_t candidate = *ptr;
+                    if ((void *)candidate >= gheith::array && (void *)candidate < gheith::array + gheith::len * sizeof(int))
+                    {
+                        gheith::GC->markBlock((void *)candidate);
+                    }
+                }
+            }
+        }
+    }   
 };
 
 void threadsInit() {
@@ -106,7 +158,24 @@ void threadsInit() {
             yield();
         }
     });
-    
+
+    //GC
+    thread(Process::kernelProcess,[] {
+        //Debug::printf("| starting GC\n");
+        while (true) {
+                //yield();
+                stopWorld();
+                markPhase();
+                // for(uint32_t i = 0; i < sizeof(GC->marks); i++){
+                //     if(GC->marks[i] != 0)
+                //     Debug::printf("mark: %d\n", GC->marks[i]);
+                // }
+                gheith::GC->sweep();
+                //Debug::printf("hello");
+                resumeWorld();
+        }
+    });    
+
 }
 
 void yield() {

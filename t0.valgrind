@@ -1,0 +1,30 @@
+==460731== Memcheck, a memory error detector
+==460731== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==460731== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==460731== Command: /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386 -no-reboot -accel tcg,thread=multi -cpu max -smp 4 -m 128m -nographic --monitor none --serial file:t0.raw -drive file=kernel/build/kernel.img,index=0,media=disk,format=raw -drive file=t0.data,index=1,media=disk,format=raw -device isa-debug-exit,iobase=0xf4,iosize=0x04
+==460731== Parent PID: 460730
+==460731== 
+==460731== Conditional jump or move depends on uninitialised value(s)
+==460731==    at 0x3F5974: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x45BA9D: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x43DABB: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x557AC5: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x4EB9FF: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x830CD1: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x4F13BD: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x3E41CC: main (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731== 
+==460731== Warning: set address range perms: large range [0x944d000, 0x4944d000) (defined)
+==460731== Thread 3:
+==460731== Conditional jump or move depends on uninitialised value(s)
+==460731==    at 0x412456: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x413BCF: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x3F8304: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x45BEFF: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x459D0D: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x4DCC7F: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x4DEF83: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x829942: ??? (in /u/gheith/public/qemu_5.1.0/bin/qemu-system-i386)
+==460731==    by 0x5DDC608: start_thread (pthread_create.c:477)
+==460731==    by 0x5F16352: clone (clone.S:95)
+==460731== 

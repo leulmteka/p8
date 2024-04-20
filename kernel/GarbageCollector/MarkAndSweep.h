@@ -26,22 +26,22 @@ private:
     static uint32_t numGlobalObjects;
     static uint32_t numStaticObjects;
 
-    bool* marks;
+
 
     
     //A Heap Lock? Concurrency? 
 
     bool isPointer(uint32_t* field) {return true;};
-    void sweep() {};
     //uint32_t* allocateFreeMem(uint32_t size);
 
 
 public:
+    bool *marks;
     MarkAndSweep(void* heapStart, size_t bytes){
-        marks = new bool[bytes/sizeof(uint32_t)];
+        marks = new bool[bytes / 4];
         //marks[bytes/sizeof(uint32_t)];
         // for(uint32_t i = 0; i < bytes/sizeof(uint32_t); i++){
-        //     Debug::printf("%d\n", marks[i]);
+             Debug::printf("sz%d\n", bytes/4);
         // }
     }
     ~MarkAndSweep(){};
@@ -55,17 +55,20 @@ public:
     static void addGlobalObject(uint32_t* obj){};
     static void addStaticObject(uint32_t* obj){};
 
-    void markBlock(int blockIndex) {
-        // Set the mark for a block
-        //if (blockIndex < marks.size()) {
-            marks[blockIndex] = true;
-        //}
-    }
+    void markBlock(void* ptr);
+    void sweep();
+    //     if (ptr >= gheith::array && ptr < gheith::array + gheith::len * sizeof(int))
+    //     {
+    //         int idx = ((((uintptr_t)ptr) - ((uintptr_t)gheith::array)) / 4) - 1;
+    //         marks[idx] = true;
+    //     }
+    // }
     void unmarkBlock(int blockIndex) {
         // Clear the mark for a block
        
         marks[blockIndex] = false;
     }
+    
 
 };
 
