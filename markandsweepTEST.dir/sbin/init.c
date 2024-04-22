@@ -11,7 +11,7 @@ typedef struct Node {
 Node* createNode(int val) {
     Node* n = (Node*)malloc(sizeof(Node));
     if (n == NULL) {
-        printf("Memory allocation failed\n");
+        printf("*** Memory allocation failed\n");
         return NULL;
     }
     n->value = val;
@@ -47,20 +47,20 @@ int main() {
     const int iterations = 1000;
     const int size = 1000;
 
-    printf("Starting the stress test for Mark-and-Sweep GC\n");
+    printf("*** Starting the stress test for Mark-and-Sweep GC\n");
 
     int i = 0;
     while(i < iterations){
         Node* list = createList(size);
         removeList(list);
         if (i % 100 == 0) {
-            printf("Iteration %d: List created and destroyed\n", i);
+            printf("*** Iteration %d: List created and destroyed\n", i);
         }
 
         i++;
     }
 
-    printf("Stress test completed\n");
+    printf("*** Stress test completed\n");
     shutdown();
     return 0;
 }
